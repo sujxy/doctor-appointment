@@ -1,4 +1,7 @@
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // nodemailer transporter to send OTP email to user
 const transporter = nodemailer.createTransport({

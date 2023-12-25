@@ -28,3 +28,13 @@ export const reserveSlot = async (req, res) => {
     res.status(404).json({ error: err.message });
   }
 };
+
+export const getSlot = async (req, res) => {
+  try {
+    const { slotId } = req.params;
+    const slot = await Slot.findOne({ _id: slotId });
+    res.status(200).json(slot);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
