@@ -14,7 +14,7 @@ export default function Layout() {
     }
   };
   return (
-    <div className="w-screen ">
+    <div className="w-screen bg-gray-200">
       <div className="sticky top-0 flex items-center justify-between px-8 py-3 shadow-md bg-white">
         <Link
           to="/"

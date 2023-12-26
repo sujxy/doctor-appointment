@@ -55,7 +55,7 @@ export default function BookingPage() {
   }, []);
 
   return (
-    <div className="w-3/4 min-h-[720px] mx-auto border-x  ">
+    <div className="w-3/4 min-h-[720px] mx-auto border-x  bg-white">
       {doctorData ? (
         <div className="w-full min-h-[120px] border-b flex items-center justify-start  py-6 px-4">
           <div className="w-1/5">

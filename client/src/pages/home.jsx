@@ -14,7 +14,7 @@ export default function Home() {
     fetchDoctors();
   }, []);
   return (
-    <div className="w-3/4 min-h-[720px] mx-auto border-x pt-8 ">
+    <div className="w-3/4 min-h-[720px] mx-auto border-x pt-8 bg-white">
       <Appointments />
       <h1 className="h-1/6  border-s-4 border-s-primary font-light text-2xl text-primary ps-2 ms-2 mb-5">
         Doctors

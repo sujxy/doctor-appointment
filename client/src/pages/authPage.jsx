@@ -32,8 +32,11 @@ export default function AuthPage() {
     }
   };
   return (
-    <div className="w-screen min-h-[720px] flex items-center justify-center ">
+    <div className="w-screen min-h-[720px] flex items-center justify-center bg-white">
       <div className="w-1/4 font-poppins px-6 py-4 flex flex-col items-center justify-evenly gap-2 rounded-lg border shadow-md">
+        <h1 className="font-pacifico text-3xl text-primary hover:scale-105 transition-all mt-2">
+          DocPlus
+        </h1>
         <h1 className="font-light text-xl my-2">Log In using your Email</h1>
         <input
           type="email"
