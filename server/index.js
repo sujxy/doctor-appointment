@@ -10,6 +10,7 @@ import authRoutes from "./routes/authRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 import slotRoutes from "./routes/slotRoutes.js";
 import clinicRoutes from "./routes/clinicRoutes.js";
+import appointmentRoutes from "./routes/appointmentRoutes.js";
 
 import { doctorsData, clinicData, dummySlots } from "./data/data.js";
 
@@ -50,6 +51,7 @@ app.use("/auth", authRoutes);
 app.use("/doctor", doctorRoutes);
 app.use("/slot", slotRoutes);
 app.use("/clinic", clinicRoutes);
+app.use("/appointment", appointmentRoutes);
 
 // app.use("/appointment", appointmentRoutes);
 

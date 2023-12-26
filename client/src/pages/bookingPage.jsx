@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { SyncLoader } from "react-spinners";
 import AppointmentType from "../components/appointmentType";
 import ClinicDetails from "../components/clinicDetails";
 import Slots from "../components/Slots";
 import SummarySection from "../components/summarySection";
+import { useUser } from "../context/user.js";
 
 export default function BookingPage() {
   const { doc_id } = useParams();
@@ -16,6 +17,11 @@ export default function BookingPage() {
   const [currentDate, setCurrentDate] = useState();
   const [currentSlotId, setCurrentSlotId] = useState();
   const [showSummary, setShowSummary] = useState(false);
+  const [confirm, setConfirm] = useState(false);
+
+  const { user } = useUser();
+
+  const navigate = useNavigate();
 
   const getDoctorDetails = async () => {
     const { data } = await axios.get(`/doctor/${doc_id}`);
@@ -25,6 +31,22 @@ export default function BookingPage() {
   const getDoctorClinics = async () => {
     const { data } = await axios.get(`/clinic/${doc_id}`);
     setClinicData(data);
+  };
+
+  const createAppointment = async () => {
+    if (!user) {
+      navigate("/auth");
+    }
+    if (user) {
+      const { data } = await axios.post("/appointment", {
+        doc_id: doc_id,
+        clinic_id: clinicId,
+        slot_id: currentSlotId,
+      });
+      if (data.msg === "success") {
+        setConfirm(true);
+      }
+    }
   };
 
   useEffect(() => {
@@ -88,10 +110,11 @@ export default function BookingPage() {
         <SummarySection
           clinicId={clinicId}
           consultType={consultType}
-          currentDate={currentDate}
           currentSlotId={currentSlotId}
           doctorData={doctorData}
           setShowSummary={setShowSummary}
+          createAppointment={createAppointment}
+          confirm={confirm}
         />
       )}
     </div>

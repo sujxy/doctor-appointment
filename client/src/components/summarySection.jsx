@@ -11,10 +11,11 @@ import {
 export default function SummarySection({
   clinicId,
   consultType,
-  currentDate,
   currentSlotId,
   doctorData,
   setShowSummary,
+  createAppointment,
+  confirm,
 }) {
   const [clinic, setClinic] = useState(null);
   const [slot, setSlot] = useState(null);
@@ -33,6 +34,15 @@ export default function SummarySection({
     const reqStr = `/slot/${currentSlotId}`;
     const { data } = await axios.get(reqStr);
     setSlot(data);
+  };
+  const formatDate = (date) => {
+    const dateObj = new Date(date);
+    const res = dateObj.toLocaleDateString("en-US", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+    });
+    return res;
   };
 
   useEffect(() => {
@@ -63,7 +73,9 @@ export default function SummarySection({
         <div className="font-poppins">
           <div className="flex gap-2 justify-start">
             <CalendarCheck2 color="#0085FF" />
-            <h1 className="font-light">{slot?.date}</h1>
+            <h1 className="font-light">
+              {slot?.date ? formatDate(slot.date) : "loading.."}
+            </h1>
           </div>
           <div className="flex gap-2 justify-start mt-2">
             <Clock10 color="#0085FF" />
@@ -71,20 +83,26 @@ export default function SummarySection({
           </div>
         </div>
       </div>
-      <div className=" w-full flex  justify-between px-8">
-        <button
-          className="outline-btn mt-4"
-          onClick={() => setShowSummary(false)}
-        >
-          Change Date&Time
-        </button>
-        <button
-          className="outline-btn mt-4"
-          onClick={() => setShowSummary(true)}
-        >
-          Confirm
-        </button>
-      </div>
+      {!confirm ? (
+        <div className=" w-full flex  justify-between px-8">
+          <button
+            className="outline-btn mt-4"
+            onClick={() => setShowSummary(false)}
+          >
+            Change Date&Time
+          </button>
+          <button
+            className="outline-btn mt-4"
+            onClick={() => createAppointment()}
+          >
+            Confirm
+          </button>
+        </div>
+      ) : (
+        <div className="w-full flex items-center justify-center py-4 font-poppins text-semibold bg-green-500 text-white">
+          Booking Confirmed
+        </div>
+      )}
     </>
   );
 }

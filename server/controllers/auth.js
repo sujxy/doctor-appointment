@@ -19,7 +19,7 @@ const getLatestOtp = async (email) => {
 };
 
 const destroyOtp = async (id) => {
-  await OTP.deleteOne({ _id: id });
+  await OTP.deleteMany({ userId: id });
 };
 
 export const generateOpt = async (req, res) => {
@@ -64,12 +64,15 @@ export const verifyOtp = async (req, res) => {
       const match = await bcrypt.compare(inputOtp, latestOtp.value);
       if (match) {
         //delete otp
-        await destroyOtp(latestOtp._id);
-        const token = jwt.sign({ email }, process.env.JWT_SECRET);
+        const token = jwt.sign(
+          { userId: latestOtp.userId, email },
+          process.env.JWT_SECRET
+        );
+        await destroyOtp(latestOtp.userId);
         res
           .status(200)
-          .cookie("token", token)
-          .json({ msg: "login successful" });
+
+          .json({ msg: "login successful", token: token });
 
         return;
       } else {
@@ -85,8 +88,9 @@ export const verifyOtp = async (req, res) => {
 
 export const setLogout = async (req, res) => {
   try {
+    console.log(req.user);
     if (req.user.email) {
-      res.status(200).cookie("token", null).json({ msg: "logout successful" });
+      res.status(200).json({ msg: "logout successful" });
     } else {
       res.status(404).json({ error: "user dosent exists" });
     }

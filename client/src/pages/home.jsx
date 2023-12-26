@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import DoctorCard from "../components/doctorCard";
+import Appointments from "../components/appointments";
 
 export default function Home() {
   const [doctors, setDoctors] = useState();
@@ -14,6 +15,7 @@ export default function Home() {
   }, []);
   return (
     <div className="w-3/4 min-h-[720px] mx-auto border-x pt-8 ">
+      <Appointments />
       <h1 className="h-1/6  border-s-4 border-s-primary font-light text-2xl text-primary ps-2 ms-2 mb-5">
         Doctors
       </h1>
